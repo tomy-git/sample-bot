@@ -21,6 +21,20 @@ class LinebotController < ApplicationController
 
     events = client.parse_events_from(body)
 
+    callback_list = []
+    callback_list.push("こんにちは")
+    callback_list.push("おはよう")
+    callback_list.push("こんばんは")
+    callback_list.push("ありがとう")
+    callback_list.push("愛してる")
+
+
+    if callback_list.index(message)
+      callback_message = callback_list[callback_list.index(message)]
+    else
+      callback_message = event.message['text']
+    end
+
     events.each { |event|
       case event
       when Line::Bot::Event::Message
@@ -28,7 +42,8 @@ class LinebotController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           message = {
             type: 'text',
-            text: event.message['text']
+            # text: event.message['text']
+            text: callback_message
           }
           client.reply_message(event['replyToken'], message)
         end
