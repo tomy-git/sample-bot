@@ -23,6 +23,22 @@ class LinebotController < ApplicationController
 
     events.each { |event|
       # event.message['text]でLINEに送られてきたメッセージを取得
+      # if event.message['text'].include?("おはよう")
+      #   respons = "おはよう！今日も元気だね"
+      # elsif event.message['text'].include?("こんにちは")
+      #   respons = "もうお昼だね！ご飯食べた？"
+      # elsif event.message['text'].include?("こんばんは")
+      #   respons = "もうすっかり暗くなったね"
+      # elsif event.message['text'].include?("ごはん")
+      #   respons = "私も･･･好きだよ"
+      # else
+      #   respons = event.message['text']
+      # end
+
+      # フードメニュー設定
+      eat = ["ごはん", "ご飯", "御飯", "何食べる"]
+      menu = ["ラーメン", "うどん", "マック", "定食", "牛丼"]
+      # event.message['text]でLINEに送られてきたメッセージを取得
       if event.message['text'].include?("おはよう")
         respons = "おはよう！今日も元気だね"
       elsif event.message['text'].include?("こんにちは")
@@ -31,6 +47,8 @@ class LinebotController < ApplicationController
         respons = "もうすっかり暗くなったね"
       elsif event.message['text'].include?("好き")
         respons = "私も･･･好きだよ"
+      elsif eat.include?(event.message['text'])
+        respons = "う～ん今は" + menu.sample + "の気分かな！"
       else
         respons = event.message['text']
       end
